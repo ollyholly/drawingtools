@@ -1,4 +1,4 @@
-import { Container, Box, Typography, Button, Card } from '@mui/material';
+import { Container, Box, Typography, Button, Card, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 import data from './Assets/emoji.json';
 import { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -16,28 +16,61 @@ const theme = createTheme({
 
 const App = () => {
   const [rolledDice, setRolledDice] = useState([]);
+  const [gameMode, setGameMode] = useState('story');
+
+  const handleChange = (event) => {
+    setGameMode(event.target.value );
+    console.log('GEME MODE CHANGED TO', gameMode)
+  };
 
   const rollDice = () => {
-    const emojiArray = Object.keys(data).reduce((acc, i) => ([...acc, ...data[i]]), []);
+    const allEmoji = Object.keys(data).reduce((acc, i) => ([...acc, ...data[i]]), []);
+    let emojiMode = allEmoji
+    let diceNumber = 3
 
-    const sample = _.sampleSize(emojiArray, 3)
+    if (gameMode == 'animals') {
+      emojiMode = data['animals']
+      diceNumber = 2
+    }
 
-    setRolledDice(sample);
+    const sampleEmoji = _.sampleSize(emojiMode, diceNumber)
+
+    setRolledDice(sampleEmoji);
   };
 
   useEffect(() => {
     // console.log('Rolled the dice!');
     rollDice();
-  }, []);
+  }, [gameMode]);
 
   return (
     <Container>
       <ThemeProvider theme={theme}>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center',
+            alignContent: 'center', flexDirection: 'column'
+}}>
           <Typography variant="h3" gutterBottom my={5} align="center">
-            draw me this
+            draw-moji
           </Typography>
+        <Box sx={{ minWidth: 200 }} mb={5}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Game Mode</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={gameMode}
+          label="Game Mode"
+          onChange={handleChange}
+        >
+          <MenuItem value='story'>Story</MenuItem>
+          <MenuItem value='animals'>Animals</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
         </Box>
+
+
+
         <Box
           sx={{
             display: 'flex',
