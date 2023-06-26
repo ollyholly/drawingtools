@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import _ from 'lodash';
 
+
 const theme = createTheme({
   palette: {
     blacky: {
@@ -14,28 +15,33 @@ const theme = createTheme({
   }
 });
 
+const allEmoji = Object.keys(data).reduce((acc, i) => ([...acc, ...data[i]]), []);
+
+const GAME_MODES = {
+  'animals': [data['animals'], data['animals']],
+  'animals-plants': [data['animals'], data['plants']],
+  'animals-vehicles': [data['animals'], data['vehicles']],
+  'story': [allEmoji, allEmoji, allEmoji]
+}
+
+const sampleEmoji = (emojiSet) => _.sampleSize(emojiSet, 1)
+
+const collectCombo = (schema) => schema.map(set => sampleEmoji(set))
+
+
 const App = () => {
   const [rolledDice, setRolledDice] = useState([]);
   const [gameMode, setGameMode] = useState('story');
 
   const handleChange = (event) => {
     setGameMode(event.target.value );
-    console.log('GEME MODE CHANGED TO', gameMode)
   };
 
   const rollDice = () => {
-    const allEmoji = Object.keys(data).reduce((acc, i) => ([...acc, ...data[i]]), []);
-    let emojiMode = allEmoji
-    let diceNumber = 3
 
-    if (gameMode == 'animals') {
-      emojiMode = data['animals']
-      diceNumber = 2
-    }
+    const selectedEmoji = collectCombo(GAME_MODES[gameMode])
 
-    const sampleEmoji = _.sampleSize(emojiMode, diceNumber)
-
-    setRolledDice(sampleEmoji);
+    setRolledDice(selectedEmoji);
   };
 
   useEffect(() => {
@@ -64,6 +70,8 @@ const App = () => {
         >
           <MenuItem value='story'>Story</MenuItem>
           <MenuItem value='animals'>Animals</MenuItem>
+          <MenuItem value='animals-plants'>Animals + Plants</MenuItem>
+          <MenuItem value='animals-vehicles'>Animals + Vehicles</MenuItem>
         </Select>
       </FormControl>
     </Box>
