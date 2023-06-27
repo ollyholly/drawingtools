@@ -21,6 +21,7 @@ const GAME_MODES = {
   'animals': [data['animals'], data['animals']],
   'animals-plants': [data['animals'], data['plants']],
   'animals-vehicles': [data['animals'], data['vehicles']],
+  'animals-emotions': [data['animals'], data['emotions']],
   'story': [allEmoji, allEmoji, allEmoji]
 }
 
@@ -70,6 +71,7 @@ const App = () => {
         >
           <MenuItem value='story'>Story</MenuItem>
           <MenuItem value='animals'>Animals</MenuItem>
+          <MenuItem value='animals-emotions'>Animals + Emotions</MenuItem>
           <MenuItem value='animals-plants'>Animals + Plants</MenuItem>
           <MenuItem value='animals-vehicles'>Animals + Vehicles</MenuItem>
         </Select>
