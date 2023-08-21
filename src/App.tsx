@@ -1,67 +1,25 @@
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  Card,
-  Select,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  SelectChangeEvent
-} from '@mui/material';
-import { darken } from '@mui/material/styles';
-import data from './Assets/emoji.json';
+import { Container, Box, Typography, Card } from '@mui/material';
+import { GAME_MODES } from './Assets/gameModes';
 import { useState, useEffect } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { motion } from 'framer-motion';
+import { ThemeProvider } from '@mui/material/styles';
 import _ from 'lodash';
-
-const theme = createTheme({
-  palette: {
-    blacky: {
-      main: '#222222',
-      contrastText: '#fff'
-    }
-  }
-});
-
-const allEmoji = Object.keys(data).reduce<string[]>((acc, key) => {
-  const category = data[key as keyof typeof data];
-  return [...acc, ...category];
-}, []);
-
-
-type GameModes = {
-  [key: string]: string[][];
-};
-
-const GAME_MODES: GameModes = {
-  animals: [data['animals'], data['animals']],
-  'animals-plants': [data['animals'], data['plants']],
-  'animals-vehicles': [data['animals'], data['vehicles']],
-  'animals-emotions': [data['animals'], data['emotions']],
-  story: [allEmoji, allEmoji, allEmoji]
-};
+import { theme } from './Components/Theme';
+import { RollDiceButton } from './Components/RollDiceButton';
+import { GameModeSelect } from './Components/GameModeSelect';
 
 const sampleEmoji = (emojiSet: string[]): string[] => _.sampleSize(emojiSet, 1);
 
-
-const collectCombo = (schema: string[][]) => schema.map((set) => sampleEmoji(set)) as string[][]
+const collectCombo = (schema: string[][]) => schema.map((set) => sampleEmoji(set)) as string[][];
 
 const App = () => {
   const [rolledDice, setRolledDice] = useState<string[]>([]);
 
   const [gameMode, setGameMode] = useState('story');
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setGameMode(event.target.value as string);
-};
-
   const rollDice = () => {
-    const selectedEmoji = collectCombo(GAME_MODES[gameMode]).flat()
+    const selectedEmoji = collectCombo(GAME_MODES[gameMode]).flat();
     setRolledDice(selectedEmoji);
-};
+  };
 
   useEffect(() => {
     rollDice();
@@ -81,23 +39,7 @@ const App = () => {
           <Typography variant="h3" gutterBottom my={5} align="center">
             draw-moji
           </Typography>
-          <Box sx={{ minWidth: 200 }} mb={5}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Game Mode</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={gameMode}
-                label="Game Mode"
-                onChange={handleChange}>
-                <MenuItem value="story">Story</MenuItem>
-                <MenuItem value="animals">Animals</MenuItem>
-                <MenuItem value="animals-emotions">Animals + Emotions</MenuItem>
-                <MenuItem value="animals-plants">Animals + Plants</MenuItem>
-                <MenuItem value="animals-vehicles">Animals + Vehicles</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+          <GameModeSelect value={gameMode} onChange={setGameMode} />
         </Box>
 
         <Box
@@ -121,16 +63,7 @@ const App = () => {
           ))}
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            onClick={rollDice}
-            variant="contained"
-            size="large"
-            component={motion.div}
-            sx={{ backgroundColor: theme.palette.blacky.main, '&:hover': { backgroundColor: darken(theme.palette.blacky.main, 0.15) }}}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8 }}>
-            roll me
-          </Button>
+          <RollDiceButton onClick={rollDice} />
         </Box>
       </ThemeProvider>
     </Container>
