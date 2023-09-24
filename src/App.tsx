@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Container>
       <ThemeProvider theme={theme}>
-      <Router>
+        <Router>
           <Routes>
             <Route path="/" element={<Drawmoji />} />
             <Route path="/drawmoji" element={<Drawmoji />} />
