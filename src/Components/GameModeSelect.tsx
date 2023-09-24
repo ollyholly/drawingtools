@@ -1,14 +1,15 @@
 import { Box, Select, FormControl, InputLabel, MenuItem, SelectChangeEvent } from '@mui/material';
+import { type GameMode } from '../Assets/gameModes';
 
 export const GameModeSelect = ({
   value,
   onChange
 }: {
-  value: string;
-  onChange: (value: string) => void;
+  value: GameMode;
+  onChange: (value: GameMode) => void;
 }) => {
   const handleChange = (event: SelectChangeEvent) => {
-    onChange(event.target.value as string);
+    onChange(event.target.value as GameMode);
   };
 
   return (

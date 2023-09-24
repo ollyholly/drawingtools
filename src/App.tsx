@@ -1,5 +1,5 @@
 import { Container, Box, Typography, Card } from '@mui/material';
-import { GAME_MODES } from './Assets/gameModes';
+import { GAME_MODES, type GameMode } from './Assets/gameModes';
 import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import _ from 'lodash';
@@ -14,7 +14,7 @@ const collectCombo = (schema: string[][]) => schema.map((set) => sampleEmoji(set
 const App = () => {
   const [rolledDice, setRolledDice] = useState<string[]>([]);
 
-  const [gameMode, setGameMode] = useState('story');
+  const [gameMode, setGameMode] = useState<GameMode>('story');
 
   const rollDice = () => {
     const selectedEmoji = collectCombo(GAME_MODES[gameMode]).flat();

@@ -1,7 +1,14 @@
 import data from './emoji.json';
 
+export type GameMode = 
+| 'animals'
+| 'animals-plants'
+| 'animals-vehicles'
+| 'animals-emotions'
+| 'story'
+
 type GameModes = {
-  [key: string]: string[][];
+  [K in GameMode]: string[][];
 };
 
 const allEmoji = Object.keys(data).reduce<string[]>((acc, key) => {
