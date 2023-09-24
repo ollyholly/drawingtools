@@ -21,7 +21,8 @@ export const GameModeSelect = ({
           id="gamemode-select"
           value={value}
           label="Game Mode"
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           <MenuItem value="story">Story</MenuItem>
           <MenuItem value="animals">Animals</MenuItem>
           <MenuItem value="animals-emotions">Animals + Emotions</MenuItem>

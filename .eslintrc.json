@@ -23,13 +23,10 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "quotes": [2, "single", { "avoidEscape": true }],
-    "@typescript-eslint/explicit-module-boundary-types": "off" 
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }

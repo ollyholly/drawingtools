@@ -1,11 +1,11 @@
 import data from './emoji.json';
 
-export type GameMode = 
-| 'animals'
-| 'animals-plants'
-| 'animals-vehicles'
-| 'animals-emotions'
-| 'story'
+export type GameMode =
+  | 'animals'
+  | 'animals-plants'
+  | 'animals-vehicles'
+  | 'animals-emotions'
+  | 'story';
 
 type GameModes = {
   [K in GameMode]: string[][];
